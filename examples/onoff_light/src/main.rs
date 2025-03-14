@@ -184,6 +184,7 @@ fn run() -> Result<(), Error> {
     );
 
     let dir = std::env::temp_dir().join("rs-matter");
+    info!("Persisting to {:?}", dir);
 
     psm.load(&dir, &matter)?;
 

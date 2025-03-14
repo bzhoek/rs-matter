@@ -208,7 +208,7 @@ impl ServiceMode {
                 protocol: "_tcp",
                 port: matter_port,
                 service_subtypes: &[],
-                txt_kvs: &[("", "")],
+                txt_kvs: &[("key", "value")],
             }),
             ServiceMode::Commissionable(discriminator) => {
                 let discriminator_str = Self::get_discriminator_str(*discriminator);

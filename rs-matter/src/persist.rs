@@ -25,7 +25,7 @@ pub mod fileio {
     use std::io::{Read, Write};
     use std::path::Path;
 
-    use log::info;
+    use log::{info, trace};
 
     use crate::error::{Error, ErrorCode};
     use crate::utils::init::{init, Init};
@@ -102,7 +102,7 @@ pub mod fileio {
         ) -> Result<Option<&'b [u8]>, Error> {
             let path = dir.join(key);
 
-            match fs::File::open(path) {
+            match fs::File::open(&path) {
                 Ok(mut file) => {
                     let mut offset = 0;
 
@@ -122,7 +122,8 @@ pub mod fileio {
 
                     let data = &buf[..offset];
 
-                    info!("Key {}: loaded {} bytes {:?}", key, data.len(), data);
+                    info!("Key '{}' loaded from {:?}", key, path);
+                    trace!("Loaded {} bytes: {:?}", data.len(), data);
 
                     Ok(Some(data))
                 }
@@ -137,7 +138,7 @@ pub mod fileio {
 
             file.write_all(data)?;
 
-            info!("Key {}: stored {} bytes {:?}", key, data.len(), data);
+            info!("Key {}: stored {} in {:?} as bytes {:?}", key, data.len(), file, data);
 
             Ok(())
         }
